@@ -1,5 +1,8 @@
 package com.example.demo.java;
 
+import com.greenpineyu.fel.FelEngine;
+import com.greenpineyu.fel.FelEngineImpl;
+
 import java.time.Month;
 import java.util.Scanner;
 import java.util.Stack;
@@ -129,7 +132,7 @@ public class JavaCalculate {
                 // i+1往后循环判断如果有数值类型则字符串相加，比如1+28 检索到第一个字符为2 循环判断之前如果还是数值则相加，结果为18
                 i = i+1;
                 while (judgeNumber(A.charAt(i))){
-                    temps = A.charAt(i) + temps;
+                    temps = temps + A.charAt(i);
                     i++;
                 }
                 // 循环完毕i恢复原始位置
@@ -182,8 +185,11 @@ public class JavaCalculate {
 
     public static void formula(){
         JavaCalculate test = new JavaCalculate();
-        test.getResult("max(add(min(1,2,4),max(2,18-1,20000/2))+444,4444/12)");
+        test.getResult("max(add(min(1,2,4),max(2,18-1,20000/2))+444,444444/12)");
         System.out.println("函数多参数："+number.pop());
+
+        FelEngine felEngine = new FelEngineImpl();
+        System.out.println(felEngine.eval("max(sum(min(1,2,4),max(2,18-1,20000/2))+444,444444/12)"));
         /*test.getResult("add(min(2,4),max(2,8))");
         System.out.println("规定格式："+number.pop());
         test.getResult("add(min(1,2,4),max(2,8,12))");
