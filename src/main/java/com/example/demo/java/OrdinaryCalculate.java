@@ -137,11 +137,19 @@ public class OrdinaryCalculate {
                             }else if (")".equals(ws)){
                                 eW++;
                             }
-                            setW = setW + ws;
+
+                            if("*".equals(ws) || "/".equals(ws)){
+                                String beforeStr = formulas[i+wi-1];
+                                setW = setW.substring(0,setW.length()-beforeStr.length());
+                                String afterStr = formulas[i+wi+1];
+                                setW = setW+"("+beforeStr+ws+afterStr+")";
+                                wi+=2;
+                            }else{
+                                setW = setW + ws;
+                                wi++;
+                            }
                             if (sW == eW){
                                 break;
-                            }else{
-                                wi++;
                             }
                         }
                         b = "(" + a + formulas[i] + setW + ")";
@@ -227,7 +235,6 @@ public class OrdinaryCalculate {
                 int end = number.pop();// 因为先进后出的特性，所以后值先出
                 int send = number.pop();// 前值后出
                 int[] N = {send,end};
-                System.out.println("公式 "+send + tempOpera + end);
                 int result = 0;
                 if(tempOpera.equals("+"))
                     result = jia(N);
@@ -237,14 +244,13 @@ public class OrdinaryCalculate {
                     result = cheng(N);
                 else if(tempOpera.equals("/"))
                     result = chu(N);
-                System.out.println("结果 "+result);
                 number.push(result);
             }
         }
     }
 
     public static void main(String[] args){
-        String formula = "4+(7-24)*91*(40/17+1)";
+        String formula = "9*2+1/3*2-4+(3*2/5+3+3*6)+3*5-1+3+(4+5*1/2)";
         String formulaParsing = "("+formulaParsing(formula)+")";
         System.out.println(formulaParsing);
         calculate(formulaParsing);
